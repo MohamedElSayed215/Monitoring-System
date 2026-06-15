@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: nodejs-app-monitor
+  namespace: monitoring
+  labels:
+    release: monitoring        # مهم يتطابق مع الـ Helm release name بتاع Prometheus
+spec:
+  selector:
+    matchLabels:
+      app: nodejs-app          # نفس الـ label في الـ Service بتاعك
+  namespaceSelector:
+    matchNames:
+      - default                # الـ namespace اللي فيه الـ app
+  endpoints:
+    - port: http               # نفس الـ port name في الـ Service
+      path: /metrics
+      interval: 15s            # كل كام ثانية Prometheus يسحب الـ metrics
+      scrapeTimeout: 10s

@@ -1,0 +1,65 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+
+metadata:
+  name: nodejs-rules
+  namespace: monitoring
+  labels:
+    release: monitoring
+
+spec:
+  groups:
+
+  - name: nodejs.rules
+
+    rules:
+
+    - alert: NodeJsApplicationDown
+
+      expr: up{job="nodejs-app"} == 0
+
+      for: 1m
+
+      labels:
+        severity: critical
+
+      annotations:
+        summary: "NodeJS application is DOWN"
+
+        description: |
+          Prometheus cannot scrape the application
+          for more than 1 minute.
+
+
+
+    - alert: HighHttpRequests
+
+      expr: increase(http_requests_total[1m]) > 100
+
+      for: 30s
+
+      labels:
+        severity: warning
+
+      annotations:
+        summary: "High HTTP Requests"
+
+        description: |
+          More than 100 requests received during the last minute.
+
+
+
+    - alert: PodRestarting
+
+      expr: increase(kube_pod_container_status_restarts_total{namespace="default"}[5m]) > 0
+
+      for: 1m
+
+      labels:
+        severity: warning
+
+      annotations:
+        summary: "Pod restarted"
+
+        description: |
+          One of the NodeJS Pods restarted.
