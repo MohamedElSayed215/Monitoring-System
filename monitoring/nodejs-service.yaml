@@ -5,6 +5,7 @@ metadata:
   namespace: default
   labels:
     app: nodejs-app
+    job: nodejs-application  
 spec:
   type: ClusterIP
   selector:

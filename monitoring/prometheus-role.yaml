@@ -1,4 +1,4 @@
-apiVersion: monitoring.coreos.com/v1
+apiVersion:monitoring.coreos.com/v1
 kind: PrometheusRule
 
 metadata:
@@ -16,9 +16,9 @@ spec:
 
     - alert: NodeJsApplicationDown
 
-      expr: up{job="nodejs-app"} == 0
+      expr: absent(up{job="nodejs-application"})
 
-      for: 1m
+        # for: 1m
 
       labels:
         severity: critical

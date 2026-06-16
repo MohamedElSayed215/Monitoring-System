@@ -4,8 +4,10 @@ metadata:
   name: nodejs-app-monitor
   namespace: monitoring
   labels:
-    release: monitoring        # مهم يتطابق مع الـ Helm release name بتاع Prometheus
+    release: monitoring
+    app: nodejs-app       # مهم يتطابق مع الـ Helm release name بتاع Prometheus
 spec:
+  jobLabel: job
   selector:
     matchLabels:
       app: nodejs-app          # نفس الـ label في الـ Service بتاعك
