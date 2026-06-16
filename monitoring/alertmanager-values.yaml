@@ -1,7 +1,7 @@
 alertmanager:
   config:
     global:
-      slack_api_url: "https://hooks.slack.com/services/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" 
+      slack_api_url: "###" 
     route:
       receiver: 'slack-notifications'
       group_by: ['alertname']

@@ -5,17 +5,17 @@ metadata:
   namespace: monitoring
   labels:
     release: monitoring
-    app: nodejs-app       # مهم يتطابق مع الـ Helm release name بتاع Prometheus
+    app: nodejs-app       
 spec:
   jobLabel: job
   selector:
     matchLabels:
-      app: nodejs-app          # نفس الـ label في الـ Service بتاعك
+      app: nodejs-app         
   namespaceSelector:
     matchNames:
-      - default                # الـ namespace اللي فيه الـ app
+      - default                
   endpoints:
-    - port: http               # نفس الـ port name في الـ Service
+    - port: http               
       path: /metrics
-      interval: 15s            # كل كام ثانية Prometheus يسحب الـ metrics
+      interval: 15s           
       scrapeTimeout: 10s
