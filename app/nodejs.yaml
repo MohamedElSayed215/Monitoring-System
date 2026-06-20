@@ -1,0 +1,19 @@
+# nginx.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+    name: nodejs
+    namespace: argocd
+spec:
+    project: default
+    source:
+        repoURL: 'https://github.com/MohamedElSayed215/gitops.git'
+        path: manifests/nodejs
+        targetRevision: main
+    destination:
+        server: 'https://kubernetes.default.svc'
+        namespace: default
+    syncPolicy:
+      automated:
+        selfHeal: true
+        prune: true

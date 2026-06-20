@@ -1,0 +1,39 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: slack-config
+  namespace: monitoring
+  labels:
+    alertmanagerConfig: main
+
+spec:
+  route:
+    receiver: slack-notifications
+    groupBy:
+      - alertname
+    groupWait: 10s
+    groupInterval: 5m
+    repeatInterval: 1h
+
+    routes:
+      - receiver: slack-notifications
+        matchers:
+          - name: alertname
+            value: NodeJsApplicationDown
+            matchType: "="
+
+  receivers:
+    - name: slack-notifications
+      slackConfigs:
+        - apiURL:
+            name: slack-webhook
+            key: url
+          channel: "#k8s-alert"
+          sendResolved: true
+          title: '{{ template "slack.default.title" . }}'
+          text: |
+            {{ range .Alerts }}
+            *Alert:* {{ .Annotations.summary }}
+            *Description:* {{ .Annotations.description }}
+            *Severity:* {{ .Labels.severity }}
+            {{ end }}
