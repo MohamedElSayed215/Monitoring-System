@@ -18,7 +18,7 @@ This repository follows a GitOps pattern where ArgoCD continuously syncs cluster
 - An **ArgoCD App of Apps** pattern for managing all applications from a single root
 
 ---
-
+![](https://github.com/MohamedElSayed215/Monitoring-System/blob/main/project-structure.png)
 ## Repository Structure
 
 ```
